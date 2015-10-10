@@ -39,7 +39,7 @@ $(function(){
             {
                 var str = $(data).find("body").text();//获取返回的字符串
                 var json = $.parseJSON(str);//把字符串转化为json对象
-                $('#preview').attr('src', cmsUrl+'image/'+json.name);
+                $('#preview').attr('src', cmsUrl+json.name);
                 $('#imgVal').val(json.name);
                 $('#loading').hide();
             },
