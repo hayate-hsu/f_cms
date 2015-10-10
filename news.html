@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <title>NIOT-广州中国科学院计算机网络信息中心分中心</title>
+    <script type="text/javascript" src="/js/html5shiv.js"></script>
+    <link rel="stylesheet" href="/css/main.css" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var checkPage = function(end, page){
+                $('#next').removeClass('arrowRight_disabled').addClass('arrowRight');
+                $('#prev').removeClass('arrowLeft_disabled').addClass('arrowLeft');
+                if(end==1){$('#next').addClass('arrowRight_disabled').removeClass('arrowRight');}
+                if(page==0){$('#prev').addClass('arrowLeft_disabled').removeClass('arrowLeft');}
+            };
+
+            //加载新闻列表
+            var page=0;
+            var urlList = 'message',
+                objList = {
+                    groups: '1003',
+                    mask: 2,
+                    page: page,
+                    gmtype: 3
+                },
+                callbackList = function(data){
+                    console.log(data);
+                    checkPage(data.end, objList.page);
+                    var len = data.messages.length;
+                    var k='<a href="/newsdetail.html?id='+data.messages[0].id+'"><img src="'+cmsUrl+'image/'+data.messages[0].image+'" /></a>'+
+                            '<span>'+data.messages[0].title+'</span>';
+                    $('.nwBanner').html(k);
+                    if(len>1){
+                        var h=t='';
+                        for(var i=1; i<len; i++){
+                            t='<div class="newsGroup"><a href="/newsdetail.html?id='+data.messages[i].id+'"><img src="'+cmsUrl+'image/'+data.messages[i].image+'" width="260" height="156" /></a>'+
+                            '<div class="newsbox"><div><span class="innw">国内资讯</span><span class="nwTime">'+data.messages[i].ctime+'</span></div>'+
+                            '<h3><a href="/newsdetail.html?id='+data.messages[i].id+'">'+data.messages[i].title+'</a></h3>'+
+                            '<p>'+data.messages[i].subtitle+'</p></div></div>';
+                            h+=t;
+                        }
+                        $('.newsTown').html(h);
+                    }
+                };
+            ajaxGet(urlList, objList, callbackList);
+
+            //加载通告
+            var callbackTG = function(data){
+                console.log(data);
+                var h=t='';
+                for(var i=0; i<data.messages.length; i++){
+                    t='<a href="/newsdetail.html?id='+data.messages[i].id+'">'+data.messages[i].title+'</a>';
+                    h+=t;
+                }
+                $('marquee').html(h);
+            };
+            getList(callbackTG, 2);
+
+            //page
+            $(document).on('click', '#next', function(){
+                if(!$(this).hasClass('arrowRight_disabled')){
+                    page += 1;
+                    objList = {
+                        groups: group,
+                        mask: mask,
+                        page: page
+                    };
+                    ajaxGet(urlList, objList, callbackList);
+                }
+            });
+            $(document).on('click', '#prev', function(){
+                if(!$(this).hasClass('arrowLeft_disabled')){
+                    page-=1;
+                    page<0 ? page=0 : page;
+                    objList = {
+                        groups: group,
+                        mask: mask,
+                        page: page
+                    };
+                    ajaxGet(urlList, objList, callbackList);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <a href="/niotindex.html" class="logo">广州中国科学院计算机网络信息中心分中心</a>
+        <nav class="fstnav">
+            <ul>
+                <li><a href="/index.html">首页</a></li>
+                <li><span>|</span></li>
+                <li><a href="/jobs.html">招聘动态</a></li>
+                <li><span>|</span></li>
+                <li><a href="/aboutus.html">关于NIOT</a></li>
+                <li><span>|</span></li>
+                <li><a href="http://weibo.com/cnicniot" target="_blank">微博</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <nav class="secnav">
+        <ul>
+            <li><a href="http://reg.cniotroot.cn/" id="tmzc" target="_blank"><i></i>标识注册查询</a></li>
+            <li><a href="/zckj.html" id="zckj"><i></i>众创空间</a></li>
+            <li><a href="/cloud.html" id="yfww"><i></i>云服务</a></li>
+            <li><a href="/zncs.html" id="zhcs"><i></i>智慧城市</a></li>
+            <li><a href="javascript:;" id="zfxm" title="开发中，敬请期待"><i></i>科技研究</a></li>
+        </ul>
+    </nav>
+
+    <div class="nw_wrapper">
+        <div class="nwLeft">
+            <div class="nw_search">
+                <div class="news">
+                    <span>通知公告：</span>
+                    <marquee scrollAmount="10" width="583"></marquee>
+                </div>
+            </div>
+            <div class="nwBanner"></div>
+            <div class="newsTown"></div>
+            <div class="newsPages">
+                <input type="button" class="arrow arrowLeft" value="上一页" style="margin-right: 20px;" id="prev" /><input type="button" class="arrow arrowRight" value="下一页" id="next" />
+            </div>
+        </div>
+
+        <div class="nwRight">
+            <div class="bdS">
+                <div class="bdSearch">
+                    <input type="text" placeholder="搜索关键字" onkeydown="EnterPress(event, this)" id="bdS" />
+                    <button>搜索</button>
+                </div>
+            </div>
+            <!--<a href="/news/4ddysddsycj.html"><img src="/images/video.jpg" width="332" height="174" style="border: none;display: block;margin-top: 15px;" /></a>-->
+            <div class="nwAside">
+                <h4>创投动态<a href="/zckj.html">more+</a></h4>
+                <div class="ctdt">
+                    <div class="ctdt_group">
+                        <div class="ctdt_box">
+                            <a href="http://www.bidongwifi.com/" target="_blank"><img src="/images/bidong_s.jpg" width="100" height="100" /></a>
+                            <h6><a href="http://www.bidongwifi.com/" target="_blank">壁咚WiFi</a></h6>
+                            <p>壁咚WiFi是由国家物联网标识管理公共服务平台NIOT团队设计与开发,改善城...<!--<a href="#" class="nwD">详情>></a>--></p>
+                        </div>
+                        <p class="ctdt_p"><span>当前估值</span><em>20,000,000</em>人民币</p>
+                        <p class="ctdt_p"><span>已融资</span><em>500,000</em>人民币</p>
+                    </div>
+                    <div class="ctdt_group">
+                        <div class="ctdt_box">
+                            <a href="http://www.mosign.cn/#/" target="_blank"><img src="/images/mosi_s.jpg" width="100" height="100" /></a>
+                            <h6><a href="http://www.mosign.cn/#/" target="_blank">魔饰</a></h6>
+                            <p>壁咚WiFi是由国家物联网标识管理公共服务平台NIOT团队设计与开发,改善城...</p>
+                        </div>
+                        <p class="ctdt_p"><span>当前估值</span><em>20,000,000</em>人民币</p>
+                        <p class="ctdt_p"><span>已融资</span><em>500,000</em>人民币</p>
+                    </div>
+                    <div class="ctdt_group" style="border: none;">
+                        <div class="ctdt_box">
+                            <a href="http://www.saomashou.com/" target="_blank"><img src="/images/saoma_s.jpg" width="100" height="100" /></a>
+                            <h6><a href="http://www.saomashou.com/" target="_blank">扫码兽</a></h6>
+                            <p>扫码兽是由国家物联网标识管理公共服务平台NIOT团队设计与开发,数据源于国家可...</p>
+                        </div>
+                        <p class="ctdt_p"><span>当前估值</span><em>20,000,000</em>人民币</p>
+                        <p class="ctdt_p"><span>已融资</span><em>500,000</em>人民币</p>
+                    </div>
+                </div>
+            </div>
+            <div class="nwAside">
+                <h4>寻求报道</h4>
+                <div class="xqbd">
+                    <p class="nwp">如果你的产品足够有新意，请联系我们！</p>
+                    <p>电话<i>|</i>68686522</p>
+                    <p>地址<i>|</i>广东省广州市南沙区环市大道南2号南沙资讯科技园软件南楼203</p>
+                    <p>邮箱<i>|</i>zhangxiaoliang@niot.cn</p>
+                </div>
+            </div>
+            <div class="nwAside">
+                <h4>合作机构</h4>
+                <div class="hzjg">
+                    <ul>
+                        <li style="margin: 0 20px 16px 0;"><a href="http://www.ancc.org.cn/" target="_blank"><img src="/images/gykj.jpg" /><span>中国物品编码中心</span></a></li>
+                        <li><a href="http://www.etiri.com.cn/" target="_blank"><img src="/images/nszf.jpg" /><span>工业和信息化部电子科技情报研究所</span></a></li>
+                        <li style="margin: 0 20px 16px 0;"><a href="http://www.catr.cn/" target="_blank"><img src="/images/xkkj.jpg" /><span>工业和信息化部电信研究院</span></a></li>
+                        <li><a href="http://ftz.gzns.gov.cn/" target="_blank"><img src="/images/zgdx.jpg" /><span>广东自贸区南沙片区政府</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="nwAside">
+                <h4>关注我们</h4>
+                <div class="gzwm">
+                    <div class="ewm"><img src="/images/ewm.png" width="182" height="182" /><span>扫二维码关注官方微信号</span></div>
+                    <div class="weibo">
+                        <h6>新浪微博</h6>
+                        <p>NIOT</p>
+                        <a href="http://weibo.com/cnicniot" target="_blank">关注</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="friendlink">
+            <div class="flinkbox">
+                <div class="moselect">友情链接<i></i></div>
+                <ul>
+                    <li><a href="http://www.bidongwifi.com/" target="_blank">壁咚WiFi</a></li>
+                </ul>
+            </div>
+            <div class="flinkbox">
+                <div class="moselect">技术研发联盟<i></i></div>
+                <ul>
+                    <li><a href="http://www.ciotc.org/" target="_blank">江苏物联网研究发展中心</a></li>
+                    <li><a href="http://www.nercita.org.cn/" target="_blank">北京农业信息技术研究中心</a></li>
+                    <li><a href="http://www.cqupt.edu.cn/" target="_blank">重庆邮电大学</a></li>
+                    <li><a href="http://www.fudan-wuxi.net/" target="_blank">复旦大学无锡研究院</a></li>
+                </ul>
+            </div>
+            <div class="flinkbox">
+                <div class="moselect">应用示范共建单位<i></i></div>
+                <ul>
+                    <li><a href="http://www.gci-china.com/Web/Main.aspx" target="_blank">广州交通信息化建设投资运营有限公司</a></li>
+                    <li><a href="http://iot.10086.cn/" target="_blank">中国移动物联网基地</a></li>
+                    <li><a href="http://www.wiot.com.cn/" target="_blank">广州物联天下科技集团有限公司</a></li>
+                </ul>
+            </div>
+        </div>
+        <p style="padding-top: 16px;">ICP备案编号：京ICP备09112257号 版权所有 中国科学院计算机网络信息中心</p>
+        <p>地址：北京市海淀区中关村南四街4号</p>
+        <p>电话：+86-10-58813000　邮箱:support@niot.cn</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <title>NIOT-广州中国科学院计算机网络信息中心分中心</title>
+    <script type="text/javascript" src="/js/html5shiv.js"></script>
+    <link rel="stylesheet" href="/css/main.css" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <!--<script type="text/javascript" src="/js/scrollPath.min.js"></script>-->
+    <script type="text/javascript">
+        $(function(){
+            //加载标识资讯
+            var callbackSign = function(data){
+                var h=t='', len=data.messages.length;
+                len<5 ? len=len : len=5;
+                for(var i=0; i<len; i++){
+                    t='<p><a href="/newsdetail.html?id='+data.messages[i].id+'" title="'+data.messages[i].title+'">'+data.messages[i].title+'</a><span>'+data.messages[i].ctime.substring(0, 10)+'</span></p>';
+                    if(i==0){
+                        t+='<div><p>'+data.messages[i].subtitle+'<a href="/newsdetail.html?id='+data.messages[i].id+'" class="more">详情</a></p></div>';
+                    }
+                    h+=t;
+                }
+                $('.bz_news').append(h);
+            };
+            getList(callbackSign, 1);
+
+            //加载平台通告
+            var callbackTG = function(data){
+                var h=t='', len=data.messages.length;
+                len<5 ? len=len : len=5;
+                for(var i=0; i<len; i++){
+                    t='<p><a href="/newsdetail.html?id='+data.messages[i].id+'" title="'+data.messages[i].title+'">'+data.messages[i].title+'</a></p>';
+                    if(i==0){
+                        t+='<div><p>'+data.messages[i].subtitle+'<a href="/newsdetail.html?id='+data.messages[i].id+'">详情</a></p></div>';
+                    }
+                    h+=t;
+                }
+                $('.mcNews').html(h);
+            };
+            getList(callbackTG, 2);
+
+            //加载技术资讯
+            var callbackList = function(data){
+                var h=t='', len=data.messages.length;
+                len<9 ? len=len : len=9;
+                for(var i=0; i<len; i++){
+                    t='<li class="fb0'+(i+1)+'">';
+                    if(i==3){
+                        t += '<img src="'+cmsUrl+'image/'+data.messages[i].image+'" width="274" height="572" />';
+                    }else if(i==4 || i==7){
+                        t += '<img src="'+cmsUrl+'image/'+data.messages[i].image+'" width="572" height="274" />';
+                    }else{
+                        t += '<img src="'+cmsUrl+'image/'+data.messages[i].image+'" width="274" height="274" />';
+                    }
+                    t+='<a href="/newsdetail.html?id='+data.messages[i].id+'"><span class="innw">国内资讯</span><span class="scTime">'+data.messages[i].ctime.substring(0, 10)+'</span><div><h3>'+data.messages[i].title+'</h3><p>'+data.messages[i].subtitle+'</p></div></a></li>';
+                    h+=t;
+                }
+                $('.fallbox ul').html(h);
+
+                $('.fallbox li').hover(function(){
+                    $(this).find('a').fadeIn();
+                },function(){
+                    $(this).find('a').fadeOut();
+                });
+            };
+            getList(callbackList, 3);
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <a href="/niotindex.html" class="logo">广州中国科学院计算机网络信息中心分中心</a>
+        <nav class="fstnav">
+            <ul>
+                <li><a href="/index.html" class="on">首页</a></li>
+                <li><span>|</span></li>
+                <li><a href="/jobs.html">招聘动态</a></li>
+                <li><span>|</span></li>
+                <li><a href="/aboutus.html">关于NIOT</a></li>
+                <li><span>|</span></li>
+                <li><a href="http://weibo.com/cnicniot" target="_blank">微博</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <nav class="secnav" id="secnav">
+        <ul>
+            <li><a href="http://reg.cniotroot.cn/" id="tmzc" target="_blank"><i></i>标识注册查询</a></li>
+            <li><a href="/zckj.html" id="zckj"><i></i>众创空间</a></li>
+            <li><a href="/cloud.html" id="yfww"><i></i>云服务</a></li>
+            <li><a href="/zncs.html" id="zhcs"><i></i>智慧城市</a></li>
+            <li><a href="javascript:;" id="zfxm" title="开发中，敬请期待"><i></i>科技研究</a></li>
+        </ul>
+    </nav>
+
+    <section class="banner">
+        <div class="bannerImg">
+            <div class="img01"></div>
+            <div class="img02"></div>
+        </div>
+        <ul>
+            <li class="on" style="width: 32px;">1</li>
+            <li>2</li>
+        </ul>
+    </section>
+
+    <section class="layer01">
+        <div class="layerbox">
+            <aside class="findMark">
+                <div>
+                    <i></i>
+                </div>
+                <i class="closed" title="关闭"></i>
+            </aside>
+            <div class="bz_search">
+                <h2>查询</h2>
+                <script type="text/javascript">bzAll();setInterval('bzAll()', 60000);</script>
+                <ul class="bz_data"><li>历史查询<span id="bz_all">14080808</span></li><li><i></i></li><li>今日查询<span id="bz_today">1</span></li></ul>
+                <div class="bz_sbox">
+                    <input type="text" placeholder="请输入需要查询的标识" onkeydown="EnterPress(event, this)" id="bzS"  />
+                    <button>查询</button>
+                </div>
+                <div class="bz_register">
+                    <h2>注册</h2>
+                    <span class="bz_reTip">授权注册商<i></i></span><span class="bz_line"></span>
+                    <div class="bz_reRoll">
+                        <div>
+                            <ul class="bzRoll_0"></ul>
+                            <ul class="bzRoll_1">
+                                <li><a href="http://iot.jmars.com:9191/" target="_blank"><img src="images/jmit.jpg" /><p>捷玛科技</p></a></li>
+                                <li><a href="http://iot.jmars.com:9191/" target="_blank"><img src="images/jmit.jpg" /><p>捷玛科技</p></a></li>
+                                <li><a href="http://iot.jmars.com:9191/" target="_blank"><img src="images/jmit.jpg" /><p>捷玛科技</p></a></li>
+                                <li><a href="http://iot.jmars.com:9191/" target="_blank"><img src="images/jmit.jpg" /><p>捷玛科技</p></a></li>
+                                <li><a href="http://iot.jmars.com:9191/" target="_blank"><img src="images/jmit.jpg" /><p>捷玛科技</p></a></li>
+                            </ul>
+                            <ul class="bzRoll_2"></ul>
+                        </div>
+                    </div>
+                    <span class="bz_arrowR"></span><span class="bz_arrowL"></span>
+                    <div class="bz_info">
+                        <i></i>
+                        <p>捷玛公司是专注于商品流通、软件开发、解决方案提供、系统集成及IT服务的外商独资高科技企业。自2000年成立以来，为上海百联集团下属大型连锁零售、物流企业，为中集集团下属各类企业以及ZARA服装专卖等国内外知名企业相关的过千家商铺、供应商、仓库、物流配送中心进行了IT基础架构和集成、软件客制化开发、解决方案实施，全年365天24小时的IT服务。</p>
+                    </div>
+                    <p class="bz_link"><a href="http://iot.jmars.com:9191/" target="_blank" class="bz_btn">注册</a><a href="http://reg.cniotroot.cn/" target="_blank" class="bz_gray">申请成为授权注册商</a></p>
+                </div>
+            </div>
+            <div class="bz_news">
+                <h2>标识资讯</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="layer02">
+        <div class="layerbox">
+            <div class="showVideo">
+                <object id='splayer' width='710' height='398'>
+                    <param name='allowScriptAccess' value='opaque' />
+                    <embed src="http://player.youku.com/player.php/sid/XOTUwODAxNTI0/v.swf" allowFullScreen="false" quality="high" width="710" height="398" align="middle" allowScriptAccess="always" wmode="opaque" type="application/x-shockwave-flash"></embed>
+                </object>
+                <p>we are NIOT</p>
+            </div>
+            <div class="menchant">
+                <h2>平台通告</h2>
+                <span></span>
+                <div class="mcNews"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="layer03">
+        <div class="techInfy">
+            <header>
+                <h1>技术资讯</h1>
+                <h2>Techincal Information</h2>
+                <span></span>
+                <a href="/news.html">more+</a>
+            </header>
+            <div class="fallbox">
+                <ul></ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="layer04">
+        <div class="suppInfy">
+            <header>
+                <h1>物联众创空间</h1>
+                <h2>Achievement of Supply and Demand Platform</h2>
+                <span></span>
+            </header>
+            <div class="summary">
+                <p>启动项目<br /><span>3</span></p>
+                <i></i>
+                <p>完成融资<br /><span>62536</span></p>
+                <i></i>
+                <p>当期总估值<br /><span>238963</span></p>
+                <i></i>
+                <p style="margin:28px 0 0 58px;"><a href="/zckj.html#subProFrom" class="redbtn">项目申请加入</a><a href="javascript:;" id="wytz">我要投资</a></p>
+            </div>
+            <div class="detial">
+                <a href="http://www.bidongwifi.com/" target="_blank"><img src="/images/bidong.jpg" width="398" height="294" style="float:left;" /></a>
+                <div class="note">
+                    <h3><a href="http://www.bidongwifi.com/" target="_blank">壁咚WiFi</a></h3>
+                    <p class="np01">扫码兽是由国家物联网标识管理公共服务平台NIOT团队设计与开发,数据源于国家可追溯服务平台提供。<!--<a href="http://www.bidongwifi.com/" target="_blank">详情>></a>--></p>
+                    <p class="np02">已融资：<i>￥</i><span>20080</span></p>
+                    <p class="np03">此项目须在2015/04/18前，获得￥500000的支持才可成功！</p>
+                    <div class="progress">
+                        <div class="content">
+                            <div class="expand"></div>
+                            <span class="count">30%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact">
+                    <p>微信公众号<br /><span>bidongwifi</span></p>
+                    <p>咨询QQ<br /><span>157881423</span></p>
+                    <a href="http://www.bidongwifi.com/" target="_blank">了解详情</a>
+                </div>
+            </div>
+            <div class="detial">
+                <a href="http://www.mosign.cn/#/" target="_blank"><img src="/images/mosi.png" width="398" height="294" style="float:left;" /></a>
+                <div class="note">
+                    <h3><a href="http://www.mosign.cn/#/" target="_blank">魔饰</a></h3>
+                    <p class="np01">扫码兽是由国家物联网标识管理公共服务平台NIOT团队设计与开发,数据源于国家可追溯服务平台提供。</p>
+                    <p class="np02">已融资：<i>￥</i><span>20080</span></p>
+                    <p class="np03">此项目须在2015/04/18前，获得￥500000的支持才可成功！</p>
+                    <div class="progress">
+                        <div class="content">
+                            <div class="expand"></div>
+                            <span class="count">30%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact">
+                    <p>微信公众号<br /><span>moshiGZ</span></p>
+                    <p>客服电话<br /><span>020-85631668</span></p>
+                    <a href="http://www.mosign.cn/#/" target="_blank">了解详情</a>
+                </div>
+            </div>
+            <div class="detial">
+                <a href="http://www.saomashou.com/" target="_blank"><img src="/images/saoma.jpg" width="398" height="294" style="float:left;" /></a>
+                <div class="note">
+                    <h3><a href="http://www.saomashou.com/" target="_blank">扫码兽</a></h3>
+                    <p class="np01">扫码兽是由国家物联网标识管理公共服务平台NIOT团队设计与开发,数据源于国家可追溯服务平台提供。</p>
+                    <p class="np02">已融资：<i>￥</i><span>20080</span></p>
+                    <p class="np03">此项目须在2015/04/18前，获得￥500000的支持才可成功！</p>
+                    <div class="progress">
+                        <div class="content">
+                            <div class="expand"></div>
+                            <span class="count">30%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact">
+                    <p>微信公众号<br /><span>moshiGZ</span></p>
+                    <p>客服电话<br /><span>020-85631668</span></p>
+                    <a href="http://www.saomashou.com/" target="_blank">了解详情</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="friendlink">
+            <div class="flinkbox">
+                <div class="moselect">友情链接<i></i></div>
+                <ul>
+                    <li><a href="http://www.bidongwifi.com/" target="_blank">壁咚WiFi</a></li>
+                </ul>
+            </div>
+            <div class="flinkbox">
+                <div class="moselect">技术研发联盟<i></i></div>
+                <ul>
+                    <li><a href="http://www.ciotc.org/" target="_blank">江苏物联网研究发展中心</a></li>
+                    <li><a href="http://www.nercita.org.cn/" target="_blank">北京农业信息技术研究中心</a></li>
+                    <li><a href="http://www.cqupt.edu.cn/" target="_blank">重庆邮电大学</a></li>
+                    <li><a href="http://www.fudan-wuxi.net/" target="_blank">复旦大学无锡研究院</a></li>
+                </ul>
+            </div>
+            <div class="flinkbox">
+                <div class="moselect">应用示范共建单位<i></i></div>
+                <ul>
+                    <li><a href="http://www.gci-china.com/Web/Main.aspx" target="_blank">广州交通信息化建设投资运营有限公司</a></li>
+                    <li><a href="http://iot.10086.cn/" target="_blank">中国移动物联网基地</a></li>
+                    <li><a href="http://www.wiot.com.cn/" target="_blank">广州物联天下科技集团有限公司</a></li>
+                </ul>
+            </div>
+        </div>
+        <p style="padding-top: 16px;">ICP备案编号：京ICP备09112257号 版权所有 中国科学院计算机网络信息中心</p>
+        <p>地址：北京市海淀区中关村南四街4号</p>
+        <p>电话：+86-10-58813000　邮箱:support@niot.cn</p>
+    </footer>
+
+    <aside class="invest">
+        <h4>我要投资</h4>
+        <p class="brief">个人投资者要求：</p>
+        <p>1. 个人金融资产超过100万元；<br>2. 年收入超过30万元；<br>3. 在投资机构任职的专业风险投资人员；</p>
+        <p class="brief" style="margin-top: 20px;">目前暂只接受机构投资意向申请，个人投资暂不开放。<br>详情请联系：</p>
+        <p class="match">联系人：<span>张宁</span>电话：<span>186 8885 9064</span></p>
+        <i class="closed" title="关闭"></i>
+    </aside>
+</body>
+</html>

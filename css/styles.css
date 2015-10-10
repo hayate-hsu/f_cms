@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "microsoft yahei", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  position: relative;
+}
+table {
+  border-collapse: collapse;
+}
+/*===========login===========*/
+.loginWrapper {
+  width: 500px;
+  margin: 50px auto;
+}
+.loginWrapper h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
+.loginWrapper button {
+  width: 100%;
+  font-size: 20px;
+  margin-top: 30px;
+}
+/*===========index===========*/
+.header {
+  height: 90px;
+  background: #0086b3;
+}
+.header h1 {
+  line-height: 90px;
+  color: #fff;
+  font-size: 24px;
+  margin: 0;
+  text-indent: 20px;
+  text-transform: uppercase;
+}
+.header .logout {
+  position: absolute;
+  right: 20px;
+  top: 35px;
+  color: #fff;
+}
+.leftWrapper {
+  width: 200px;
+  border-right: 1px solid #ebebeb;
+  position: fixed;
+  top: 90px;
+  left: 0px;
+  bottom: 0px;
+}
+.leftWrapper ul {
+  padding: 20px;
+}
+.leftWrapper ul li h3 {
+  margin: 0;
+}
+.leftWrapper ul li ul {
+  padding: 10px 0 20px 20px;
+}
+.rightWrapper {
+  position: fixed;
+  padding: 20px;
+  top: 90px;
+  left: 200px;
+  right: 0px;
+  bottom: 0px;
+  overflow-y: auto;
+}
+.rightWrapper .bread {
+  margin-bottom: 20px;
+}
+.rightWrapper .bread button {
+  font-size: 16px;
+  padding: 0;
+  vertical-align: baseline;
+  margin: 0 5px;
+}
+.rightWrapper .welcome {
+  text-align: center;
+  font-size: 24px;
+}
+.rightWrapper .list table th {
+  padding: 5px 10px;
+  text-align: center;
+}
+.rightWrapper .list table td {
+  text-align: center;
+  padding: 5px 10px;
+}
+.rightWrapper .list table td a {
+  margin: 0 5px;
+}
+.rightWrapper .list table td button {
+  font-size: 16px;
+  padding: 0;
+  vertical-align: baseline;
+  margin: 0 5px;
+}
+.rightWrapper .list .funs {
+  margin-bottom: 20px;
+}
+.addAdmin,
+.editPwd {
+  width: 400px;
+  padding: 20px 30px;
+  margin-top: 7%;
+  background: #fff;
+}
+.addAdmin .closed,
+.editPwd .closed {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  padding: 5px;
+  border: 1px solid #888888;
+  cursor: pointer;
+}
+.addAdmin button,
+.editPwd button {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 20px;
+}
+.addAdmin .emsg,
+.editPwd .emsg {
+  display: block;
+  visibility: visible;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #c12e2a;
+  margin-top: 10px;
+}
+.page {
+  text-align: center;
+  margin: 20px 0;
+}
+.page button {
+  margin: 0 5px;
+  outline: none;
+}
+#upload {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#uploadImg {
+  width: 82px;
+  height: 34px;
+  opacity: 0;
+  float: left;
+}
+#preview {
+  width: 130px;
+  height: 78px;
+}

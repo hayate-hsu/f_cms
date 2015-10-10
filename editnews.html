@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>cms管理系统</title>
+    <link rel="stylesheet" href="/js/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="/js/md5.js"></script>
+    <script type="text/javascript" src="/js/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/lib/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="/js/lib/ueditor/ueditor.all.js"></script>
+    <script type="text/javascript" src="/js/cmsHttp.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>cms管理系统</h1>
+        <a href="/login.html" class="logout">登出</a>
+    </div>
+    <div class="leftWrapper">
+        <ul>
+            % if groups == 1000:
+            <li>
+                <h3>管理员设置</h3>
+                <ul>
+                    <li><a href="/admin.html" class="adminMenu">管理员设置</a></li>
+                </ul>
+            </li>
+            % endif
+            <li>
+                <h3>新闻公告</h3>
+                <ul>
+                    <li><a href="/newslist.html?newsId=1" class="newsMenu">普通新闻</a></li>
+                    <li><a href="/newslist.html?newsId=2" class="newsMenu">概要新闻</a></li>
+                    <li><a href="/newslist.html?newsId=3" class="newsMenu">即时新闻</a></li>
+                    <li><a href="/newslist.html?newsId=4" class="newsMenu">招聘信息</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="rightWrapper">
+        <div class="bread"><button type="button" class="btn btn-link returnback">返回</button>>>编辑</div>
+        <div class="list">
+            <div class="fontab">
+                <div class="form-group"><label>标题：</label><input type="text" class="form-control title" /></div>
+                <div class="form-group"><label>副标题：</label><input type="text" class="form-control subtitle" /></div>
+                <div class="form-group"><label>新闻类型：</label><select class="form-control section"><option value="1">Unknown</option></select></div>
+                <div class="form-group"><label>新闻类别：</label><select class="form-control gmtype"><option value="1">标识资讯</option><option value="2">通告资讯</option><option value="3">技术资讯</option></select></div>
+                <div class="form-group">
+                    <label>图片：</label>
+                    <div style="overflow: hidden; position: relative; line-height: 34px;">
+                        <input type="file" id="uploadImg" name="uploadImg" />
+                        <button type="button" class="btn btn-default" id="upload">上传图片</button>
+                        <span id="imgUrl" style="margin-left: 10px;"> </span>
+                        <img id="loading" src="js/lib/ueditor/themes/default/images/loading.gif" style="margin-left: 10px; display: none;" />
+                        <input type="hidden" id="imgVal" />
+                    </div>
+                    <div style="margin-top: 10px;">图片预览：<img id="preview" src="images/nopic.png" /></div>
+                </div>
+                <div class="form-group"><label>内容：</label><script id="content" type="text/plain" style="height:300px;"></script></div>
+                <div class="form-group"><button type="button" class="btn btn-success save">保 存</button></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+    $(function(){
+        var newsId = getParam('newsId'), id=getParam('id'), mask=getParam('mask'), content='';
+
+        //更新新闻
+        $('.save').click(function(){
+            var title = $('.title').val();
+            var subtitle = $('.subtitle').val();
+            var section = $('.section').val();
+            var gmtype = $('.gmtype').val();
+            var image = $('#imgVal').val();
+            var content = ue.getContent();
+
+            var objMessage = {
+                manager: cmsManager,
+                token: cmsToken,
+                title: title,
+                subtitle: subtitle,
+                section: section,
+                gmtype: gmtype,
+                content: content,
+                image: image
+            };
+
+            $.ajax({
+                url: cmsUrl+'message/'+id,
+                data: objMessage,
+                type: "put",
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                    window.location.href = '/newslist.html?newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken;
+                    alert('保存成功');
+                },
+                error: function(data){
+                    alert('添加失败');
+                }
+            });
+        });
+
+        //获取编辑内容
+        var urlNews = 'message/'+id,
+                objNews = {
+                    manager: cmsManager,
+                    token: cmsToken,
+                    mask: mask
+                },
+                callbackNews = function(data){
+                    console.log(data);
+                    $('.title').val(data.title);
+                    $('.subtitle').val(data.subtitle);
+                    $('.section').val(data.section);
+                    $('.gmtype').val(data.gmtype);
+                    $('#preview').attr('src', cmsUrl+'image/'+data.image);
+                    $('#imgVal').val(data.image);
+                    //$('#content').html(data.content);
+                    content = data.content;
+                };
+        ajaxGet(urlNews, objNews, callbackNews);
+
+        //编辑器初始化
+        var ue = UE.getEditor('content', {
+            autoClearinitialContent:false
+        });
+        ue.ready(function(){
+            ue.setContent(content);
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <title>招聘动态-NIOT广州中国科学院计算机网络信息中心分中心</title>
+    <script type="text/javascript" src="/js/html5shiv.js"></script>
+    <link rel="stylesheet" href="/css/main.css" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            var dataJob={},
+                callbackJob = function(data){
+                    $('.jobs_name').html(data.subtitle);
+                    $('.jobs_content').html(data.content);
+                };
+
+            //招聘列表
+            var url = 'message',
+                data = {
+                    groups: '1003',
+                    mask: 16
+                },
+                callback = function(data){
+                    var h=t='';
+                    for(var i=0; i<data.messages.length; i++){
+                        t = '<li>'+data.messages[i].title+'<input type="hidden" value="'+data.messages[i].id+'" /></li>';
+                        h+=t;
+                    }
+                    $('.jobs ul').html(h);
+                    $('.jobs ul li:first').addClass('actived');
+                    var id = data.messages[0].id;
+                    var urlJob = 'message/' + id;
+                    ajaxGet(urlJob, dataJob, callbackJob);
+                };
+            ajaxGet(url, data, callback);
+
+            //招聘信息
+            $(document).on('click', '.jobs li', function(){
+                var id = $(this).find('input').val();
+                var urlJob = 'message/' + id;
+                ajaxGet(urlJob, dataJob, callbackJob);
+                $(this).addClass('actived').siblings().removeClass('actived');
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <a href="/index.html" class="logo">广州中国科学院计算机网络信息中心分中心</a>
+        <nav class="fstnav">
+            <ul>
+                <li><a href="/index.html">首页</a></li>
+                <li><span>|</span></li>
+                <li><a href="/jobs.html" class="on">招聘动态</a></li>
+                <li><span>|</span></li>
+                <li><a href="/aboutus.html">关于NIOT</a></li>
+                <li><span>|</span></li>
+                <li><a href="http://weibo.com/cnicniot" target="_blank">微博</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <nav class="secnav">
+        <ul>
+            <li><a href="http://reg.cniotroot.cn/" id="tmzc" target="_blank"><i></i>标识注册查询</a></li>
+            <li><a href="/zckj.html" id="zckj"><i></i>众创空间</a></li>
+            <li><a href="/cloud.html" id="yfww"><i></i>云服务</a></li>
+            <li><a href="/zncs.html" id="zhcs"><i></i>智慧城市</a></li>
+            <li><a href="javascript:;" id="zfxm" title="开发中，敬请期待"><i></i>科技研究</a></li>
+        </ul>
+    </nav>
+
+    <section class="banner">
+        <div class="bannerImg">
+            <div class="img01"></div>
+            <div class="img02"></div>
+        </div>
+        <ul>
+            <li class="on" style="width: 32px;">1</li>
+            <li>2</li>
+        </ul>
+    </section>
+
+    <section class="jobs_wrapper">
+        <div class="jobs_left">
+            <div class="jobs">
+                <h3>职位</h3>
+                <ul></ul>
+            </div>
+            <div class="address">
+                <h3>联系方式</h3>
+                <ul>
+                    <li><b>电话：</b>020-39393309</li>
+                    <li><b>地址：</b>广东省广州市南沙区环市大道南2号南沙资讯科技园软件楼南楼203</li>
+                    <li><b>简历发送至邮箱：</b>hr@niot.cn<br/>（请在标题中注明所应聘职位）</li>
+                </ul>
+            </div>
+        </div>
+        <div class="jobs_right">
+            <h3 class="jobs_name"></h3>
+            <span class="line"></span>
+            <div class="jobs_content"></div>
+        </div>
+    </section>
+
+    <!--<p class="maplink">-->
+        <!--<a href="#" class="on">首页</a>-->
+        <!--<a href="#">查询平台</a>-->
+        <!--<a href="#">注册平台</a>-->
+        <!--<a href="#">关于我们</a>-->
+        <!--<a href="#">成功案例</a>-->
+        <!--<a href="#">应用推广</a>-->
+        <!--<a href="#">技术资料</a>-->
+        <!--<a href="#">新闻动态</a>-->
+        <!--<a href="#">通知公告</a>-->
+    <!--</p>-->
+    <footer>
+        <div class="friendlink">
+            <div class="flinkbox">
+                <div class="moselect">友情链接<i></i></div>
+                <ul>
+                    <li><a href="http://www.bidongwifi.com/" target="_blank">壁咚WiFi</a></li>
+                </ul>
+            </div>
+            <div class="flinkbox">
+                <div class="moselect">技术研发联盟<i></i></div>
+                <ul>
+                    <li><a href="http://www.ciotc.org/" target="_blank">江苏物联网研究发展中心</a></li>
+                    <li><a href="http://www.nercita.org.cn/" target="_blank">北京农业信息技术研究中心</a></li>
+                    <li><a href="http://www.cqupt.edu.cn/" target="_blank">重庆邮电大学</a></li>
+                    <li><a href="http://www.fudan-wuxi.net/" target="_blank">复旦大学无锡研究院</a></li>
+                </ul>
+            </div>
+            <div class="flinkbox">
+                <div class="moselect">应用示范共建单位<i></i></div>
+                <ul>
+                    <li><a href="http://www.gci-china.com/Web/Main.aspx" target="_blank">广州交通信息化建设投资运营有限公司</a></li>
+                    <li><a href="http://iot.10086.cn/" target="_blank">中国移动物联网基地</a></li>
+                    <li><a href="http://www.wiot.com.cn/" target="_blank">广州物联天下科技集团有限公司</a></li>
+                </ul>
+            </div>
+        </div>
+        <p style="padding-top: 16px;">ICP备案编号：京ICP备09112257号 版权所有 中国科学院计算机网络信息中心</p>
+        <p>地址：北京市海淀区中关村南四街4号</p>
+        <p>电话：+86-10-58813000　邮箱:support@niot.cn</p>
+    </footer>
+</body>
+</html>
