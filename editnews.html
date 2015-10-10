@@ -122,16 +122,16 @@
                     $('#preview').attr('src', cmsUrl+'image/'+data.image);
                     $('#imgVal').val(data.image);
                     //$('#content').html(data.content);
-                    content = data.content;
+
+                    ue.ready(function(){
+                        ue.setContent(data.content);
+                    });
                 };
         ajaxGet(urlNews, objNews, callbackNews);
 
         //编辑器初始化
         var ue = UE.getEditor('content', {
             autoClearinitialContent:false
-        });
-        ue.ready(function(){
-            ue.setContent(content);
         });
     });
 </script>

@@ -4,7 +4,7 @@
 
 $(function(){
 
-    window.cmsUrl = 'http://183.63.152.237:8180/';
+    window.cmsUrl = 'http://cms.bidongwifi.com/';
     window.cmsToken = getParam('token');
     window.cmsManager = getParam('manager');
 
