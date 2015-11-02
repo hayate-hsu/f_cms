@@ -84,6 +84,8 @@
             var mask = 1<<newsId;
             var image = $('#imgVal').val();
 
+            var $this = $(this);
+
             var objMessage = {
                 manager: cmsManager,
                 token: cmsToken,
@@ -101,10 +103,16 @@
                 data: objMessage,
                 type: "post",
                 dataType: "json",
+                beforeSend: function () {
+                    $this.attr({ disabled: "disabled" });
+                },
                 success: function(data){
                     console.log(data);
                     window.location.href = '/newslist.html?newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken;
                     alert('添加成功');
+                },
+                complete: function () {
+                    $this.removeAttr("disabled");
                 },
                 error: function(data){
                     alert('添加失败');

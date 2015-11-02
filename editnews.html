@@ -79,6 +79,8 @@
             var image = $('#imgVal').val();
             var content = ue.getContent();
 
+            var $this = $(this);
+
             var objMessage = {
                 manager: cmsManager,
                 token: cmsToken,
@@ -95,10 +97,16 @@
                 data: objMessage,
                 type: "put",
                 dataType: "json",
+                beforeSend: function () {
+                    $this.attr({ disabled: "disabled" });
+                },
                 success: function(data){
                     console.log(data);
                     window.location.href = '/newslist.html?newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken;
                     alert('保存成功');
+                },
+                complete: function () {
+                    $this.removeAttr("disabled");
                 },
                 error: function(data){
                     alert('添加失败');
