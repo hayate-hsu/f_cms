@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+  color: #333;
+  font-size: 16px;
+}
+a,
+button,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+.rich {
+  padding: 15px 12px;
+}
+.rich .rich_title {
+  font-size: 24px;
+  font-weight: normal;
+  color: #34495e;
+  margin-bottom: 25px;
+  line-height: 34px;
+}
+.rich .rich_sub {
+  font-size: 17px;
+  color: #000;
+  line-height: 30px;
+}
+.rich .rich_sub p {
+  text-indent: 32px;
+}
+.rich .rich_sub p img {
+  width: 100%;
+  padding: 10px 0;
+  margin: 0 auto;
+  display: block;
+}
