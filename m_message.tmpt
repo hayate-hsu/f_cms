@@ -15,7 +15,7 @@
     <div class="rich">
         <h2 class="rich_title">${title|h}</h2>
         <div class="rich_sub">
-			<p>${content|h}</p>
+			<p>${content}</p>
 		</div>
     </div>
 </body>
