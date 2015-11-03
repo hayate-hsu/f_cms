@@ -46,6 +46,7 @@
             <div class="fontab">
                 <div class="form-group"><label>标题：</label><input type="text" class="form-control title" /></div>
                 <div class="form-group"><label>副标题：</label><input type="text" class="form-control subtitle" /></div>
+                <div class="form-group"><label>标签：</label>（多个标签需要用英文逗号“,”分隔，填写格式为：AA,BB,CC）<input type="text" class="form-control bqlabel" /></div>
                 <div class="form-group"><label>新闻类型：</label><select class="form-control section"><option value="1">Unknown</option></select></div>
                 <div class="form-group"><label>新闻类别：</label><select class="form-control gmtype"><option value="1">标识资讯</option><option value="2">通告资讯</option><option value="3">技术资讯</option></select></div>
                 <div class="form-group">
@@ -74,44 +75,51 @@
         $('.save').click(function(){
             var title = $('.title').val();
             var subtitle = $('.subtitle').val();
+            var labels = $('.bqlabel').val();
             var section = $('.section').val();
             var gmtype = $('.gmtype').val();
             var image = $('#imgVal').val();
             var content = ue.getContent();
+            labels = labelFormat(labels);
 
             var $this = $(this);
 
-            var objMessage = {
-                manager: cmsManager,
-                token: cmsToken,
-                title: title,
-                subtitle: subtitle,
-                section: section,
-                gmtype: gmtype,
-                content: content,
-                image: image
-            };
+            if(labels==0){
+                alert("标签不能多于5个");return false;
+            }else{
+                var objMessage = {
+                    manager: cmsManager,
+                    token: cmsToken,
+                    title: title,
+                    subtitle: subtitle,
+                    labels: labels,
+                    section: section,
+                    gmtype: gmtype,
+                    content: content,
+                    image: image
+                };
 
-            $.ajax({
-                url: cmsUrl+'message/'+id,
-                data: objMessage,
-                type: "put",
-                dataType: "json",
-                beforeSend: function () {
-                    $this.attr({ disabled: "disabled" });
-                },
-                success: function(data){
-                    console.log(data);
-                    window.location.href = '/newslist.html?newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken;
-                    alert('保存成功');
-                },
-                complete: function () {
-                    $this.removeAttr("disabled");
-                },
-                error: function(data){
-                    alert('添加失败');
-                }
-            });
+                $.ajax({
+                    url: cmsUrl+'message/'+id,
+                    data: objMessage,
+                    type: "put",
+                    dataType: "json",
+                    beforeSend: function () {
+                        $this.attr({ disabled: "disabled" });
+                    },
+                    success: function(data){
+                        console.log(data);
+                        window.location.href = '/newslist.html?newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken;
+                        alert('保存成功');
+                    },
+                    complete: function () {
+                        $this.removeAttr("disabled");
+                    },
+                    error: function(data){
+                        alert('添加失败');
+                    }
+                });
+            }
         });
 
         //获取编辑内容
@@ -125,6 +133,7 @@
                     console.log(data);
                     $('.title').val(data.title);
                     $('.subtitle').val(data.subtitle);
+                    $('.bqlabel').val(unlabelFormat(data.labels));
                     $('.section').val(data.section);
                     $('.gmtype').val(data.gmtype);
                     $('#preview').attr('src', cmsUrl+data.image);

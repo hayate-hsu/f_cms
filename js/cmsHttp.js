@@ -67,3 +67,18 @@ function ajaxGet(url, data, callback){
         success: callback
     });
 }
+
+function labelFormat(str){
+    str = str.replace(/\s/g, '').replace(/[,，]/g, ' ');
+    str = $.trim(str);
+    var arr = str.split(' ');
+    if(arr.length>5){
+        str = 0;
+    }
+    return str;
+}
+
+function unlabelFormat(str){
+    str = str.replace(/\s/g, ',');
+    return str;
+}
