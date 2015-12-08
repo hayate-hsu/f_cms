@@ -85,19 +85,18 @@
             var content = ue.getContent();
             var mask = 1<<newsId;
             var image = $('#imgVal').val();
-            labels = labelFormat(labels);
 
             var $this = $(this);
 
-            if(labels==0){
-                alert("标签不能多于5个");return false;
+            if(labelFormat(labels).len>5){
+                alert("标签不能多于5个");
             }else{
                 var objMessage = {
                     manager: cmsManager,
                     token: cmsToken,
                     title: title,
                     subtitle: subtitle,
-                    labels: labels,
+                    labels: labelFormat(labels).str,
                     section: section,
                     gmtype: gmtype,
                     content: content,

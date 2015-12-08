@@ -72,10 +72,10 @@ function labelFormat(str){
     str = str.replace(/\s/g, '').replace(/[,，]/g, ' ');
     str = $.trim(str);
     var arr = str.split(' ');
-    if(arr.length>5){
-        str = 0;
-    }
-    return str;
+    return {
+        str: str,
+        len: arr.length
+    };
 }
 
 function unlabelFormat(str){

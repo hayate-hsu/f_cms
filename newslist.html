@@ -63,6 +63,7 @@
             //删除新闻
             $(document).on('click', '.deleteNews', function(){
                 var newsId = $(this).parent().find('input').val();
+                var $this = $(this);
 
                 if(confirm('确定要删除此新闻？')){
                     $.ajax({
@@ -71,7 +72,8 @@
                         type: "delete",
                         dataType: "json",
                         success: function(data){
-                            ajaxGet(urlNewsList, objNewsList, callbackNewsList);
+                            $this.parent().parent().remove();
+                            alert("删除成功！");
                         }
                     });
                 }else{
