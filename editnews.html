@@ -144,7 +144,7 @@
                     $('.gmtype').val(data.gmtype);
 					if(data.image){
 						$('#imgVal').val(data.image);
-						$('.pic_preview').html("附件：<a target='_blank' href='" + cmsUrl+data.image + "'>" + data.image.substring(11) + "</a>");
+						$('.pic_preview').html("附件：<a target='_blank' href='" + cmsUrl+data.image + "'>" + data.image.substring(11) + "</a>").show();
 					}
 					else{
 						$('.pic_preview').hide();
