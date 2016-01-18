@@ -4,7 +4,7 @@
 
 $(function(){
 
-    window.cmsUrl = 'http://cms.bidongwifi.com/';
+    window.cmsUrl = 'http://cms.cniotroot.cn/';
     window.cmsToken = getParam('token');
     window.cmsManager = getParam('manager');
 

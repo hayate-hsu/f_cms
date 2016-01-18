@@ -7,7 +7,7 @@ $(function(){
         var password = hex_md5($('#loginPassword').val());
 
         $.ajax({
-            url: 'http://cms.bidongwifi.com/' + 'account',
+            url: 'http://cms.cniotroot.cn/' + 'account',
             data: {manager: manager, password: password},
             type: "post",
             dataType: "json",

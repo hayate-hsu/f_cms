@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function(){
-    window.cmsUrl = 'http://183.63.152.237:8180/';
+    window.cmsUrl = 'http://cms.cniotroot.cn/';
     //返回
     $('#backUrl').click(function(){
         return history.back();
