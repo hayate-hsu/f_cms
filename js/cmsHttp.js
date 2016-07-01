@@ -31,7 +31,7 @@ $(function(){
         $('#imgUrl').text(imgUrl);
         $('#loading').show();
         $.ajaxFileUpload({
-            url: cmsUrl+'image', //用于文件上传的服务器端请求地址
+            url: cmsUrl+'fs', //用于文件上传的服务器端请求地址
             secureuri: false, //一般设置为false
             fileElementId: 'uploadImg', //文件上传空间的id属性  <input type="file" id="file" name="file" />
             //dataType: 'json', //返回值类型 一般设置为json
@@ -39,8 +39,8 @@ $(function(){
             {
                 var str = $(data).find("body").text();//获取返回的字符串
                 var json = $.parseJSON(str);//把字符串转化为json对象
-                $('#preview').attr('src', cmsUrl+json.name);
-                $('#imgVal').val(json.name);
+                $('#preview').attr('src', cmsUrl+json.url);
+                $('#imgVal').val(json.url);
                 $('#loading').hide();
             },
             error: function (data, status, e)//服务器响应失败处理函数
