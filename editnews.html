@@ -106,7 +106,7 @@
                 };
 
                 $.ajax({
-                    url: cmsUrl+'message/'+id,
+                    url: cmsUrl+'/message/'+id,
                     data: objMessage,
                     type: "put",
                     dataType: "json",
@@ -129,7 +129,7 @@
         });
 
         //获取编辑内容
-        var urlNews = 'message/'+id,
+        var urlNews = '/message/'+id,
                 objNews = {
                     manager: cmsManager,
                     token: cmsToken,

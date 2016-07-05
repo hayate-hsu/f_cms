@@ -18,7 +18,7 @@
                 };
 
             //招聘列表
-            var url = 'message',
+            var url = '/message',
                 data = {
                     groups: '1003',
                     mask: 16
@@ -32,7 +32,7 @@
                     $('.jobs ul').html(h);
                     $('.jobs ul li:first').addClass('actived');
                     var id = data.messages[0].id;
-                    var urlJob = 'message/' + id;
+                    var urlJob = '/message/' + id;
                     ajaxGet(urlJob, dataJob, callbackJob);
                 };
             ajaxGet(url, data, callback);
@@ -40,7 +40,7 @@
             //招聘信息
             $(document).on('click', '.jobs li', function(){
                 var id = $(this).find('input').val();
-                var urlJob = 'message/' + id;
+                var urlJob = '/message/' + id;
                 ajaxGet(urlJob, dataJob, callbackJob);
                 $(this).addClass('actived').siblings().removeClass('actived');
             });

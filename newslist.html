@@ -30,7 +30,7 @@
                 }
             };
 
-            var urlNewsList = 'message',
+            var urlNewsList = '/message',
                 objNewsList = {
                     manager: cmsManager,
                     token: cmsToken,
@@ -67,7 +67,7 @@
 
                 if(confirm('确定要删除此新闻？')){
                     $.ajax({
-                        url: cmsUrl+'message/'+newsId,
+                        url: cmsUrl+'/message/'+newsId,
                         data: {manager: cmsManager, token: cmsToken},
                         type: "delete",
                         dataType: "json",

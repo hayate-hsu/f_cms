@@ -12,7 +12,7 @@
     <script type="text/javascript">
         $(function(){
             //获取管理员信息
-            var urlAdmin = 'manager/admin',
+            var urlAdmin = '/manager/admin',
                 objAdmin = {
                     manager: cmsManager,
                     token: cmsToken
@@ -29,7 +29,7 @@
             ajaxGet(urlAdmin, objAdmin, callbackAdmin);
 
             //获取组信息
-            var urlGroup = 'group',
+            var urlGroup = '/group',
                 callbackGroup = function(data){
                     console.log(data);
                     var h=t='';
@@ -51,7 +51,7 @@
                     passwrod = hex_md5($('#conPwd').val()),
                     group = $('#conGroup').val();
                 $.ajax({
-                    url: cmsUrl+'manager',
+                    url: cmsUrl+'/manager',
                     data: {manager:cmsManager, token:cmsToken, user:user, password:passwrod, groups:group},
                     type: "post",
                     dataType: "json",
@@ -84,7 +84,7 @@
                 }else{
                     $(this).parent().find('.emsg').text('');
                     $.ajax({
-                        url: cmsUrl+'manager/admin',
+                        url: cmsUrl+'/manager/admin',
                         data: {manager:cmsManager, token:cmsToken, password:newpwd, mask:mask},
                         type: "put",
                         dataType: "json",

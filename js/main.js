@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function(){
-    window.cmsUrl = 'http://cms.cniotroot.cn/';
+    window.cmsUrl = 'http://cms.cniotroot.cn';
     //返回
     $('#backUrl').click(function(){
         return history.back();
@@ -403,7 +403,7 @@ function ajaxGet(url, data, callback){
 }
 function getList(callback, gmtype){
     $.ajax({
-        url: cmsUrl+'message',
+        url: cmsUrl+'/message',
         data: {
             groups: '1003',
             mask: 2,

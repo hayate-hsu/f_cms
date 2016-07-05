@@ -4,7 +4,8 @@
 
 $(function(){
 
-    window.cmsUrl = 'http://cms.cniotroot.cn/';
+    window.cmsUrl = 'http://cms.cniotroot.cn';
+    //window.cmsUrl = 'http://183.63.152.237:9991';
     window.cmsToken = getParam('token');
     window.cmsManager = getParam('manager');
 
@@ -31,7 +32,7 @@ $(function(){
         $('#imgUrl').text(imgUrl);
         $('#loading').show();
         $.ajaxFileUpload({
-            url: cmsUrl+'fs', //用于文件上传的服务器端请求地址
+            url: cmsUrl+'/fs', //用于文件上传的服务器端请求地址
             secureuri: false, //一般设置为false
             fileElementId: 'uploadImg', //文件上传空间的id属性  <input type="file" id="file" name="file" />
             //dataType: 'json', //返回值类型 一般设置为json
