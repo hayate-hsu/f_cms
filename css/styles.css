@@ -153,7 +153,19 @@ table {
   opacity: 0;
   float: left;
 }
-#preview {
+.pic_preview{margin-top: 10px;}
+.pic_preview img{
   width: 130px;
   height: 78px;
+  margin-right: 10px;
+  border: 2px solid #fff;
+}
+.alterPic img{cursor: pointer;}
+.alterPic img:hover{
+  border: 2px solid #0086b3;
+}
+#imgUrl{margin-left: 10px;}
+#loading{
+  margin-left: 10px;
+  display: none;
 }

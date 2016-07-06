@@ -50,15 +50,16 @@
                 <div class="form-group"><label>新闻类型：</label><select class="form-control section"><option value="1">Unknown</option></select></div>
                 <div class="form-group"><label>新闻类别：</label><select class="form-control gmtype"><option value="1">标识资讯</option><option value="2">通告资讯</option><option value="3">技术资讯</option></select></div>
                 <div class="form-group img_upload">
-                    <label>图片：</label>
+                    <label>封面图片：</label>
                     <div style="overflow: hidden; position: relative; line-height: 34px;">
                         <input type="file" id="uploadImg" name="uploadImg" />
-                        <button type="button" class="btn btn-default" id="upload">上传图片</button>
-                        <span id="imgUrl" style="margin-left: 10px;"> </span>
-                        <img id="loading" src="js/lib/ueditor/themes/default/images/loading.gif" style="margin-left: 10px; display: none;" />
+                        <button type="button" class="btn btn-default" id="upload">上传封面</button>
+                        <span id="imgUrl"></span>
+                        <img id="loading" src="js/lib/ueditor/themes/default/images/loading.gif" />
                         <input type="hidden" id="imgVal" />
                     </div>
-                    <div style="margin-top: 10px;" class="pic_preview">图片预览：<img id="preview" src="images/nopic.png" /></div>
+                    <div class="pic_preview">封面预览：<img id="preview" src="images/nopic.png" /></div>
+                    <div class="pic_preview alterPic">备选封面：</div>
                 </div>
                 <div class="form-group"><label>内容：</label><script id="content" type="text/plain" style="height:300px;"></script></div>
                 <div class="form-group"><button type="button" class="btn btn-success save">保 存</button></div>
@@ -73,9 +74,9 @@
 
 		//上传文件
 		if(newsId=='4'){
-			$('.img_upload>label').html("附件：");
-			$('#upload').html("上传附件");
-			$('.pic_preview').hide();
+//			$('.img_upload>label').html("附件：");
+//			$('#upload').html("上传附件");
+			$('.img_upload').hide();
 		}
 		
         //更新新闻
@@ -136,7 +137,6 @@
                     mask: mask
                 },
                 callbackNews = function(data){
-                    console.log(data.image);
                     $('.title').val(data.title);
                     $('.subtitle').val(data.subtitle);
                     $('.bqlabel').val(unlabelFormat(data.labels));
@@ -144,13 +144,15 @@
                     $('.gmtype').val(data.gmtype);
 					if(data.image){
 						$('#imgVal').val(data.image);
-						$('.pic_preview').html("附件：<a target='_blank' href='" + cmsUrl+data.image + "'>" + data.image.substring(11) + "</a>").show();
+                        $('#imgUrl').text(data.image);
+						$('#preview').attr('src', cmsUrl+data.image);
 					}
-					else{
-						$('.pic_preview').hide();
-					}
+                    var res = data.content.match(/(<img(\s)+src=\"\/fs\/)([\w]+)\"/g);
+                    for(var i=0; i<res.length; i++){
+                        var r = res[i].match(/\"(\/fs\/([\w]+))\"/);
+                         $('.alterPic').append('<img src="'+(cmsUrl+r[1])+'" data-src="'+r[1]+'" />');
+                    }
                     //$('#content').html(data.content);
-
                     ue.ready(function(){
                         ue.setContent(data.content);
                     });

@@ -24460,7 +24460,7 @@ UE.plugin.register('simpleupload', function (){
                 me.focus();
                 me.execCommand('inserthtml', '<img class="loadingclass" id="' + loadingId + '" src="' + me.options.themePath + me.options.theme +'/images/spacer.gif" title="' + (me.getLang('simpleupload.loading') || '') + '" >');
 
-                function callback(){
+                function callback(){   // 上传图片返回的数据
                     try{
                         var link, json, loader,
                             body = (iframe.contentDocument || iframe.contentWindow.document).body,
@@ -24475,6 +24475,7 @@ UE.plugin.register('simpleupload', function (){
                             loader.setAttribute('alt', json.original || '');
                             loader.removeAttribute('id');
                             domUtils.removeClasses(loader, 'loadingclass');
+                            $('.alterPic').append('<img src="'+(cmsUrl+json.url)+'" data-src="'+json.url+'" />');
                         } else {
                             showErrorLoader && showErrorLoader(json.state);
                         }

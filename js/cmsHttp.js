@@ -26,10 +26,7 @@ $(function(){
         e.preventDefault();
         $('#uploadImg').trigger('click');
     });
-
     $('#uploadImg').change(function(){
-        var imgUrl = $(this).val();
-        $('#imgUrl').text(imgUrl);
         $('#loading').show();
         $.ajaxFileUpload({
             url: cmsUrl+'/fs', //用于文件上传的服务器端请求地址
@@ -42,6 +39,7 @@ $(function(){
                 var json = $.parseJSON(str);//把字符串转化为json对象
                 $('#preview').attr('src', cmsUrl+json.url);
                 $('#imgVal').val(json.url);
+                $('#imgUrl').text(json.url);
                 $('#loading').hide();
             },
             error: function (data, status, e)//服务器响应失败处理函数
@@ -50,6 +48,16 @@ $(function(){
             }
         });
         return false;
+    });
+    // 备选封面
+    $(document).on('click', '.alterPic img', function(){
+        if(confirm("确定要替换封面吗？")){
+            var url = $(this).attr('src'),
+                src = $(this).data('src');
+            $('#imgVal').val(src);
+            $('#imgUrl').text(src);
+            $('#preview').attr('src', url);
+        }
     });
 });
 
