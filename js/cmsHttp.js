@@ -4,8 +4,9 @@
 
 $(function(){
 
-    window.cmsUrl = 'http://cms.cniotroot.cn';
-    //window.cmsUrl = 'http://183.63.152.237:9991';
+    // window.cmsUrl = 'http://cms.cniotroot.cn';
+    // window.cmsUrl = 'http://183.63.152.237:9991';
+    window.cmsUrl = '';
     window.cmsToken = getParam('token');
     window.cmsManager = getParam('manager');
 

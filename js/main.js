@@ -3,7 +3,8 @@
  */
 
 $(document).ready(function(){
-    window.cmsUrl = 'http://cms.cniotroot.cn';
+    // window.cmsUrl = 'http://cms.cniotroot.cn';
+    window.cmsUrl = '';
     //返回
     $('#backUrl').click(function(){
         return history.back();
