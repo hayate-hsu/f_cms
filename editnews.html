@@ -148,7 +148,7 @@
 						$('#preview').attr('src', cmsUrl+data.image);
 					}
                     var res = data.content.match(/(<img(\s)+src=\"\/fs\/)([\w]+)\"/g);
-                    if(!res){
+                    if(!!res){
                         for(var i=0; i<res.length; i++){
                             var r = res[i].match(/\"(\/fs\/([\w]+))\"/);
                              $('.alterPic').append('<img src="'+(cmsUrl+r[1])+'" data-src="'+r[1]+'" />');
