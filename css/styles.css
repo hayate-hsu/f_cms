@@ -102,15 +102,16 @@ table {
 .rightWrapper .list .funs {
   margin-bottom: 20px;
 }
-.addAdmin,
-.editPwd {
+.modal-dialog {
   width: 400px;
   padding: 20px 30px;
   margin-top: 7%;
   background: #fff;
 }
-.addAdmin .closed,
-.editPwd .closed {
+.modal-dialog h2{
+  margin: 20px 0 30px;
+}
+.modal-dialog .closed {
   position: absolute;
   right: 20px;
   top: 20px;
@@ -118,14 +119,12 @@ table {
   border: 1px solid #888888;
   cursor: pointer;
 }
-.addAdmin button,
-.editPwd button {
+.modal-dialog button {
   width: 100%;
   margin-top: 10px;
   font-size: 20px;
 }
-.addAdmin .emsg,
-.editPwd .emsg {
+.modal-dialog .emsg {
   display: block;
   visibility: visible;
   height: 30px;

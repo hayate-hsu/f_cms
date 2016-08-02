@@ -1,0 +1,85 @@
+## 新闻类别
+<%inherit file="base.html" />
+
+<%block name="jscode">
+<script type="text/javascript">
+    $(function(){
+        // 类别模态窗口
+        $('#addType').click(function(){
+            $('#typebox h2').text('添加类别');
+            $('.btnGroup').html('<button type="button" class="btn btn-success" id="conAddType">确 定</button>');
+            $('#typebox input').val('');
+            $('#typebox').modal(true);
+        });
+        $(document).on('click', '.typeEdit', function(){
+            var id=$(this).siblings('input').val(), name=$(this).parent().parent().find('td:eq(0)').text();
+            $('#typebox h2').text('编辑类别');
+            $('.btnGroup').html('<button type="button" class="btn btn-success" id="conEditType">保 存</button>');
+            $('#typeName').val(name);
+            $('#typebox input[name=id]').val(id);
+            $('#typebox').modal(true);
+        });
+        // 新增类别
+        $(document).on('click', '#conAddType', function(){
+            var name = $('#typeName').val();
+            if(name==''){$('#typebox .emsg').text('*请填写类型名称');return false;}
+            $('#typebox .emsg').text('');
+            var param = {
+                manager: cmsManager,
+                token: cmsToken,
+                name: name
+            };
+            typeAjax("post", param, function(data){
+                window.location.reload();
+            });
+        });
+        // 编辑类别
+        $(document).on('click', '.conEditType', function(){
+            var name = $('#typeName').val();
+            var param = {
+                manager: cmsManager,
+                token: cmsToken,
+                name: name,
+                id: $('#typebox input[name=id]').val()
+            };
+            typeAjax("put", param, function(data){
+                window.location.reload();
+            });
+        });
+    });
+</script>
+</%block>
+
+<div class="rightWrapper">
+    <div class="bread">您当前的位置>>类型设置</div>
+    <div class="list">
+        <div class="funs"><button type="button" id="addType" class="btn btn-default">添加类别</button></div>
+        <table>
+            <tr>
+                <th>名称</th>
+                <th>操作</th>
+            </tr>
+            % for gmtype in gmtypes:
+            <tr>
+                <td>${gmtype['name']}</td>
+                <td><button type="button" class="btn btn-link typeEdit">编辑</button><input type="hidden" value="${gmtype['id']}" /></td>
+            </tr>
+            % endfor
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="typebox">
+    <div class="addAdmin modal-dialog">
+        <h2>添加类别</h2><span class="closed" data-dismiss="modal" aria-hidden="true">X</span>
+        <div class="form-group">
+            <label>类别名称</label>
+            <input type="text" class="form-control" id="typeName">
+        </div>
+        <div class="btnGroup">
+            <button type="button" class="btn btn-success" id="conAddType">确 定</button>
+        </div>
+        <span class="emsg"></span>
+        <input type="hidden" name="id" />
+    </div>
+</div>

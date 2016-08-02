@@ -7,7 +7,7 @@ $(function(){
         var password = hex_md5($('#loginPassword').val());
 
         $.ajax({
-            url: '/' + 'account',
+            url: '/account',
             data: {manager: manager, password: password},
             type: "post",
             dataType: "json",

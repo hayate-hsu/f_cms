@@ -3,15 +3,14 @@
  */
 
 $(function(){
-
-    // window.cmsUrl = 'http://cms.cniotroot.cn';
-    // window.cmsUrl = 'http://183.63.152.237:9991';
     window.cmsUrl = '';
     window.cmsToken = getParam('token');
     window.cmsManager = getParam('manager');
 
-    $('.adminMenu').attr('href', $('.adminMenu').attr('href')+'?manager='+cmsManager+'&token='+cmsToken);
-
+    for(var i=0; i<$('.menulink').length; i++){
+        var v = $('.menulink').eq(i).attr('href');
+        $('.menulink').eq(i).attr('href', v+'?manager='+cmsManager+'&token='+cmsToken);
+    }
     for(var i=0; i<$('.newsMenu').length; i++){
         var v = $('.newsMenu').eq(i).attr('href');
         $('.newsMenu').eq(i).attr('href', v+'&manager='+cmsManager+'&token='+cmsToken);
@@ -75,6 +74,20 @@ function ajaxGet(url, data, callback){
         type: "get",
         dataType: "json",
         success: callback
+    });
+}
+
+function typeAjax(type, param, callback, errFunc){
+    $.ajax({
+        method: type,
+        url: '/gmtype/',
+        data: param,
+        dataType: "json"
+    }).done(function(data){
+        callback(data);
+    }).fail(function(error){
+        console.log(error);
+        if(typeof(errFunc)=="function") errFunc();
     });
 }
 

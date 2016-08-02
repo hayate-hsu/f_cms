@@ -1,178 +1,149 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>cms管理系统</title>
-    <link rel="stylesheet" href="/js/lib/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <script type="text/javascript" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/md5.js"></script>
-    <script type="text/javascript" src="/js/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/cmsHttp.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            //获取管理员信息
-            var urlAdmin = '/manager/admin',
-                objAdmin = {
-                    manager: cmsManager,
-                    token: cmsToken
-                },
-                pwd=mask='',
-                callbackAdmin = function(data){
-                    console.log(data);
-                    var h = '<tr><td>'+data.manager.user+'</td><td><button type="button" class="btn btn-link pwdEdit">修改密码</button></td></tr>';
-                    $('.list table').append(h);
-                    pwd = data.manager.password;
-                    mask = data.manager.mask;
-                    console.log(pwd + ' ' + mask);
-                };
-            ajaxGet(urlAdmin, objAdmin, callbackAdmin);
+## 管理员设置
+<%inherit file="base.html" />
 
-            //获取组信息
-            var urlGroup = '/group',
-                callbackGroup = function(data){
-                    console.log(data);
-                    var h=t='';
-                    for(var i=0; i<data.groups.length; i++){
-                        t = '<option value="'+data.groups[i].id+'">'+data.groups[i].name+'</option>';
-                        h+=t;
-                    }
-                    $('#addAdminbox select').html(h);
-                };
-            ajaxGet(urlGroup, objAdmin, callbackGroup);
+<%block name="jscode">
+<script type="text/javascript" src="/js/md5.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //获取管理员信息
+        var urlAdmin = '/manager/admin',
+            objAdmin = {
+                manager: cmsManager,
+                token: cmsToken
+            },
+            pwd='', mask='',
+            callbackAdmin = function(data){
+                var h = '<tr><td>'+data.manager.user+'</td><td><button type="button" class="btn btn-link pwdEdit">修改密码</button></td></tr>';
+                $('.list table').append(h);
+                pwd = data.manager.password;
+                mask = data.manager.mask;
+            };
+        ajaxGet(urlAdmin, objAdmin, callbackAdmin);
 
-            //添加管理员
-            $('#addAdmin').click(function(){
-                $('#addAdminbox').modal('show');
-            });
+        //获取组信息
+        var urlGroup = '/group',
+            callbackGroup = function(data){
+                for(var i=0,h=''; i<data.groups.length; i++){
+                    var t = '<option value="'+data.groups[i].id+'">'+data.groups[i].name+'</option>';
+                    h+=t;
+                }
+                $('#addAdminbox select').html(h);
+            };
+        ajaxGet(urlGroup, objAdmin, callbackGroup);
 
-            $('#conAdmin').click(function(){
-                var user = $('#conUser').val(),
-                    passwrod = hex_md5($('#conPwd').val()),
-                    group = $('#conGroup').val();
-                $.ajax({
-                    url: cmsUrl+'/manager',
-                    data: {manager:cmsManager, token:cmsToken, user:user, password:passwrod, groups:group},
-                    type: "post",
-                    dataType: "json",
-                    success: function(data){
-                        $('#addAdminbox').modal('hide');
-                    }
-                });
-            });
+        //添加管理员
+        $('#addAdmin').click(function(){
+            $('#addAdminbox input').val('');
+            $('#addAdminbox').modal('show');
+        });
 
-            //编辑-修改密码
-            $(document).on('click', '.pwdEdit', function(){
-                $('#editPwdbox').modal('show');
-            });
-
-            $('#conEditPwd').click(function(){
-                var oldpwd = $('#conOldPwd').val(),
-                    newpwd = $('#conNewPwd').val(),
-                    newpwd2 = $('#newPwd').val();
-
-                console.log(oldpwd + ' ' + newpwd);
-
-                if(oldpwd == '' || newpwd == '' || newpwd2==''){
-                    $(this).parent().find('.emsg').text('不能为空');return false;
-                }else if(oldpwd == newpwd){
-                    $(this).parent().find('.emsg').text('新旧密码一样');return false;
-                }else if(newpwd !== newpwd2){
-                    $(this).parent().find('.emsg').text('两次新密码不一样');return false;
-                }else if(oldpwd !== pwd){
-                    $(this).parent().find('.emsg').text('原密码错误');return false;
-                }else{
-                    $(this).parent().find('.emsg').text('');
-                    $.ajax({
-                        url: cmsUrl+'/manager/admin',
-                        data: {manager:cmsManager, token:cmsToken, password:newpwd, mask:mask},
-                        type: "put",
-                        dataType: "json",
-                        success: function(data){
-                            $('#editPwdbox').modal('hide');
-                        }
-                    });
+        $('#conAdmin').click(function(){
+            var user = $('#conUser').val(),
+                passwrod = hex_md5($('#conPwd').val()),
+                group = $('#conGroup').val();
+            if(user==''){$('#addAdminbox .emsg').text('*请填写管理员名称');return false;}
+            if(password==''){$('#addAdminbox .emsg').text('*请填写密码');return false;}
+            $('#addAdminbox .emsg').text('');
+            $.ajax({
+                url: cmsUrl+'/manager',
+                data: {manager:cmsManager, token:cmsToken, user:user, password:passwrod, groups:group},
+                type: "post",
+                dataType: "json",
+                success: function(data){
+                    $('#addAdminbox').modal('hide');
                 }
             });
         });
-    </script>
-</head>
 
-<body>
-    <div class="header">
-        <h1>cms管理系统</h1>
-        <a href="/login.html" class="logout">登出</a>
+        //编辑-修改密码
+        $(document).on('click', '.pwdEdit', function(){
+            $('#editPwdbox input').val('');
+            $('#editPwdbox').modal('show');
+        });
+
+        $('#conEditPwd').click(function(){
+            var oldpwd = $('#conOldPwd').val(),
+                newpwd = $('#conNewPwd').val(),
+                newpwd2 = $('#newPwd').val();
+
+            if(oldpwd == '' || newpwd == '' || newpwd2==''){
+                $('#editPwdbox .emsg').text('*不能为空');return false;
+            }else if(oldpwd == newpwd){
+                $('#editPwdbox .emsg').text('*新旧密码一样');return false;
+            }else if(newpwd !== newpwd2){
+                $('#editPwdbox .emsg').text('*两次新密码不一样');return false;
+            }else if(oldpwd !== pwd){
+                $('#editPwdbox .emsg').text('*原密码错误');return false;
+            }else{
+                $('#editPwdbox .emsg').text('');
+                $.ajax({
+                    url: cmsUrl+'/manager/admin',
+                    data: {manager:cmsManager, token:cmsToken, password:newpwd, mask:mask},
+                    type: "put",
+                    dataType: "json",
+                    success: function(data){
+                        $('#editPwdbox').modal('hide');
+                    }
+                });
+            }
+        });
+    });
+</script>
+</%block>
+
+<div class="rightWrapper">
+    <div class="bread">您当前的位置>>管理员设置</div>
+    <div class="list">
+        <div class="funs"><button type="button" id="addAdmin" class="btn btn-default">添加管理员</button></div>
+        <table>
+            <tr>
+                <th>管理员</th>
+                <th>操作</th>
+            </tr>
+        </table>
     </div>
-    <div class="leftWrapper">
-        <ul>
-            <li>
-                <h3>管理员设置</h3>
-                <ul>
-                    <li><a href="/admin.html" class="adminMenu">管理员设置</a></li>
-                </ul>
-            </li>
-            <li>
-                <h3>新闻公告</h3>
-                <ul>
-                    <li><a href="/newslist.html?newsId=1" class="newsMenu">普通新闻</a></li>
-                    <li><a href="/newslist.html?newsId=2" class="newsMenu">概要新闻</a></li>
-                    <li><a href="/newslist.html?newsId=3" class="newsMenu">即时新闻</a></li>
-                    <li><a href="/newslist.html?newsId=4" class="newsMenu">招聘信息</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div class="rightWrapper">
-        <div class="bread">您当前的位置>>管理员设置</div>
-        <div class="list">
-            <div class="funs"><button type="button" id="addAdmin" class="btn btn-default">添加管理员</button></div>
-            <table>
-                <tr>
-                    <th>管理员</th>
-                    <th>操作</th>
-                </tr>
-            </table>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="editPwdbox">
+    <div class="modal-dialog">
+        <h2>修改密码</h2><span class="closed" data-dismiss="modal" aria-hidden="true">X</span>
+        <div class="form-group">
+            <label>输入原密码</label>
+            <input type="password" class="form-control" id="conOldPwd">
         </div>
-    </div>
-
-    <div class="modal fade" tabindex="-1" role="dialog" id="editPwdbox">
-        <div class="editPwd modal-dialog">
-            <h2>修改密码</h2><span class="closed" data-dismiss="modal" aria-hidden="true">X</span>
-            <div class="form-group">
-                <label>输入原密码</label>
-                <input type="password" class="form-control" id="conOldPwd">
-            </div>
-            <div class="form-group">
-                <label>输入新密码</label>
-                <input type="password" class="form-control" id="conNewPwd">
-            </div>
-            <div class="form-group">
-                <label>再次新密码</label>
-                <input type="password" class="form-control" id="newPwd">
-            </div>
+        <div class="form-group">
+            <label>输入新密码</label>
+            <input type="password" class="form-control" id="conNewPwd">
+        </div>
+        <div class="form-group">
+            <label>再次新密码</label>
+            <input type="password" class="form-control" id="newPwd">
+        </div>
+        <div class="btnGroup">
             <button type="button" class="btn btn-success" id="conEditPwd">确 定</button>
-            <span class="emsg"></span>
         </div>
+        <span class="emsg"></span>
     </div>
+</div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="addAdminbox">
-        <div class="addAdmin modal-dialog">
-            <h2>添加管理员</h2><span class="closed" data-dismiss="modal" aria-hidden="true">X</span>
-            <div class="form-group">
-                <label>管理员账号</label>
-                <input type="text" class="form-control" id="conUser">
-            </div>
-            <div class="form-group">
-                <label>管理员密码</label>
-                <input type="password" class="form-control" id="conPwd">
-            </div>
-            <div class="form-group">
-                <label>管理员所属组</label>
-                <select class="form-control" id="conGroup"></select>
-            </div>
-            <button type="button" class="btn btn-success" id="conAdmin">确 定</button>
-            <span class="emsg"></span>
+<div class="modal fade" tabindex="-1" role="dialog" id="addAdminbox">
+    <div class="modal-dialog">
+        <h2>添加管理员</h2><span class="closed" data-dismiss="modal" aria-hidden="true">X</span>
+        <div class="form-group">
+            <label>管理员账号</label>
+            <input type="text" class="form-control" id="conUser">
         </div>
+        <div class="form-group">
+            <label>管理员密码</label>
+            <input type="password" class="form-control" id="conPwd">
+        </div>
+        <div class="form-group">
+            <label>管理员所属组</label>
+            <select class="form-control" id="conGroup"></select>
+        </div>
+        <div class="btnGroup">
+            <button type="button" class="btn btn-success" id="conAdmin">确 定</button>
+        </div>
+        <span class="emsg"></span>
     </div>
-</body>
-</html>
+</div>

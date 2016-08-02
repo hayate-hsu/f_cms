@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>cms管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/js/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/cmsHttp.js"></script>
+    <script type="text/javascript">
+        if(getParam('token')==null){
+            window.location.href = '/login.html';
+        }
+    </script>
+    <%block name="jscode"></%block>
+</head>
+
+<body>
+    <div class="header">
+        <h1>cms管理系统</h1>
+        <a href="/login.html" class="logout">登出</a>
+    </div>
+    <div class="leftWrapper">
+        <ul>
+            % if groups == 1000:
+            <li>
+                <h3>管理员设置</h3>
+                <ul>
+                    <li><a href="/admin.html" class="menulink">管理员设置</a></li>
+                </ul>
+            </li>
+            % endif
+            <li>
+                <h3>新闻类别</h3>
+                <ul>
+                    <li><a href="/gmtype.html" class="menulink">类别设置</a></li>
+                </ul>
+            </li>
+            <li>
+                <h3>新闻公告</h3>
+                <ul>
+                    <li><a href="/newslist.html?newsId=1" class="newsMenu">普通新闻</a></li>
+                    <!--<li><a href="/newslist.html?newsId=2" class="newsMenu">概要新闻</a></li>-->
+                    <!--<li><a href="/newslist.html?newsId=3" class="newsMenu">即时新闻</a></li>-->
+                    <li><a href="/newslist.html?newsId=4" class="newsMenu">招聘信息</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    ${self.body()}
+</body>
+</html>
