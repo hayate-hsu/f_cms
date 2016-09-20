@@ -82,12 +82,24 @@ table {
   text-align: center;
   font-size: 24px;
 }
+.rightWrapper .list .box{
+  width: 48%;
+  display: inline-block;
+  margin-right: 1%;
+  vertical-align: top;
+}
+.rightWrapper .list .box h4{
+  text-indent: 10px;
+  border-bottom: 1px solid #ebebeb;
+  margin: 0;
+  line-height: 40px;
+}
 .rightWrapper .list table th {
   padding: 5px 10px;
   text-align: center;
 }
 .rightWrapper .list table td {
-  text-align: center;
+  text-align: left;
   padding: 5px 10px;
 }
 .rightWrapper .list table td a {
@@ -100,12 +112,15 @@ table {
   margin: 0 5px;
 }
 .rightWrapper .list .funs {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+}
+.rightWrapper .list .funs .btn{
+  margin-right: 10px;
 }
 .modal-dialog {
   width: 400px;
   padding: 20px 30px;
-  margin-top: 7%;
+  margin-top: 10%;
   background: #fff;
 }
 .modal-dialog h2{
@@ -115,8 +130,12 @@ table {
   position: absolute;
   right: 20px;
   top: 20px;
-  padding: 5px;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
   border: 1px solid #888888;
+  border-radius: 50%;
   cursor: pointer;
 }
 .modal-dialog button {
@@ -167,4 +186,8 @@ table {
 #loading{
   margin-left: 10px;
   display: none;
+}
+.fontab .form-group select, .fontab .form-group input[type="text"], .fontab .form-group input[name="password"]{
+  width: 48%;
+  display: block;
 }

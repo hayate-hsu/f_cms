@@ -4,20 +4,10 @@
 <%block name="jscode">
 <script type="text/javascript">
     $(function(){
-        //面包屑
-        var newsId = getParam('newsId');
-        switch (newsId){
-            case '4':
-                $('.bread span').text('招聘新闻');
-                break;
-            default:
-                $('.bread span').text('普通新闻');
-        }
-
         //获取新闻列表
-        var mask = 1<<newsId, page=0;
+        var mask = 1<<1, page=0;
 
-        $('#addNews').attr('href', $('#addNews').attr('href')+'?newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken);
+        $('#addNews').attr('href', $('#addNews').attr('href')+'?manager='+cmsManager+'&token='+cmsToken);
 
         var checkPage = function(end, page){
             $('.next').removeAttr('disabled');
@@ -40,15 +30,11 @@
             callbackNewsList = function(data){
                 checkPage(data.end, objNewsList.page);
                 for(var i=0,h=''; i<data.messages.length; i++){
-                    var t='<tr><td>'+data.messages[i].title+'</td><td>'+data.messages[i].gmtype+'</td><td><a class="editNews" href="/editnews.html?id='+data.messages[i].id+'&mask='+data.messages[i].mask+'">编辑</a><button type="button" class="btn btn-link deleteNews">删除</button><input type="hidden" value="'+data.messages[i].id+'" /></td></tr>';
+                    var t='<tr><td>'+data.messages[i].title+'</td><td>'+data.messages[i].gmtype+'</td><td><a class="editNews" href="/editnews.html?id='+data.messages[i].id+'&mask='+data.messages[i].mask+'&manager='+cmsManager+'&token='+cmsToken+'">编辑</a><button type="button" class="btn btn-link deleteNews">删除</button><input type="hidden" value="'+data.messages[i].id+'" /></td></tr>';
                     h+=t;
                 }
                 $('.list table tr:gt(0)').remove();
                 $('.list table').append(h);
-                for(var j=0; j<$('.editNews').length; j++){
-                    var v = $('.editNews').eq(j).attr('href');
-                    $('.editNews').eq(j).attr('href', v+'&newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken);
-                }
             };
 
         ajaxGet(urlNewsList, objNewsList, callbackNewsList);
@@ -100,7 +86,7 @@
 </%block>
 
 <div class="rightWrapper">
-    <div class="bread">您当前的位置>><span></span></div>
+    <div class="bread">您当前的位置>><span>普通新闻</span></div>
     <div class="list">
         <div class="funs"><a href="/addnews.html" id="addNews" class="btn btn-default">添加新闻</a></div>
         <table>

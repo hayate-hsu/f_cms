@@ -42,18 +42,6 @@ ${jscode.jscode()}
 
 <script type="text/javascript">
     $(function(){
-        //面包屑
-        var newsId = getParam('newsId');
-        var v = $('.newsMenu').eq(newsId-1).text();
-        $('.bread span').text(v);
-
-		//上传文件
-		if(newsId=='4'){
-			$('.img_upload>label').html("附件：");
-			$('#upload').html("上传附件");
-			$('.pic_preview').hide();
-		}
-
         //新增新闻
         $('.sub').click(function(){
             var title = $('.title').val();
@@ -63,7 +51,7 @@ ${jscode.jscode()}
             var section = $('.section').val();
             var gmtype = $('.gmtype').val();
             var content = ue.getContent();
-            var mask = 1<<newsId;
+            var mask = 1<<1;
             var image = $('#imgVal').val();
 
             var $this = $(this);
@@ -94,7 +82,7 @@ ${jscode.jscode()}
                     },
                     success: function(data){
                         console.log(data);
-                        window.location.href = '/newslist.html?newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken;
+                        window.location.href = '/newslist.html?manager='+cmsManager+'&token='+cmsToken;
                         alert('添加成功');
                     },
                     complete: function () {

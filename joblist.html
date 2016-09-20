@@ -1,0 +1,54 @@
+## 招聘信息
+<%inherit file="base.html" />
+
+<input type="hidden" id="group" value="${groups}" />
+<div class="rightWrapper">
+    <div class="bread">您当前的位置>><span>招聘信息</span></div>
+    <div class="list">
+        <div class="funs">
+            <button type="button" class="btn btn-default" id="btnJobType">岗位类型</button>
+            <button type="button" class="btn btn-default" id="btnAddressType">工作地点</button>
+            <a href="synopsis.html?id=12698,29859-01" class="btn btn-default bz">校招简介</a>
+            <a href="synopsis.html?id=12698,29859-02" class="btn btn-default bz">宣讲信息</a>
+            <a href="addjob.html" id="addjob" class="btn btn-default menulink">新增岗位</a>
+        </div>
+        <div class="box">
+            <h4>社会招聘</h4>
+            <div id="social"></div>
+        </div>
+        <div class="box">
+            <h4>校园招聘</h4>
+            <div id="campus"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="jobsType">
+    <div class="modal-dialog">
+        <h2>新增岗位类别</h2><span class="closed" data-dismiss="modal" aria-hidden="true">X</span>
+        <div class="form-group">
+            <label>输入岗位类别名称</label>
+            <input type="text" class="form-control" name="typeName">
+        </div>
+        <div class="btnGroup">
+            <button type="button" class="btn btn-success" id="conJobsType">确 定</button>
+        </div>
+        <span class="emsg"></span>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="addressType">
+    <div class="modal-dialog">
+        <h2>新增工作地点</h2><span class="closed" data-dismiss="modal" aria-hidden="true">X</span>
+        <div class="form-group">
+            <label>输入工作地点</label>
+            <input type="text" class="form-control" name="typeName">
+        </div>
+        <div class="btnGroup">
+            <button type="button" class="btn btn-success" id="conAddressType">确 定</button>
+        </div>
+        <span class="emsg"></span>
+    </div>
+</div>
+
+<script src="/js/lib/react.min.js"></script>
+<script src="/js/jobs.js"></script>

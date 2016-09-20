@@ -46,14 +46,7 @@
 
 <script type="text/javascript">
     $(function(){
-        var newsId = getParam('newsId'), id=getParam('id'), mask=getParam('mask'), content='';
-
-		//上传文件
-		if(newsId=='4'){
-//			$('.img_upload>label').html("附件：");
-//			$('#upload').html("上传附件");
-			$('.img_upload').hide();
-		}
+        var id=getParam('id'), mask=getParam('mask'), content='';
 
         //更新新闻
         $('.save').click(function(){
@@ -92,7 +85,7 @@
                     },
                     success: function(data){
                         console.log(data);
-                        window.location.href = '/newslist.html?newsId='+newsId+'&manager='+cmsManager+'&token='+cmsToken;
+                        window.location.href = '/newslist.html?manager='+cmsManager+'&token='+cmsToken;
                         alert('保存成功');
                     },
                     complete: function () {
