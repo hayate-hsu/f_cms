@@ -54,7 +54,7 @@ var SZBox = React.createClass({displayName: "SZBox",
             list: [],
             page: 0,
             start: true,
-            end: false,
+            end: true,
             mask: 1
         }
     },
@@ -112,7 +112,7 @@ var XZBox = React.createClass({displayName: "XZBox",
             list: [],
             page: 0,
             start: true,
-            end: false,
+            end: true,
             mask: 0
         }
     },
