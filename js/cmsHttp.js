@@ -95,7 +95,18 @@ $(function(){
             alert("添加失败！");
         })
     });
-
+    // 投递邮箱
+    $(document).on('change', '#maskType', function(){
+        $(this).val()==0 ? $('#email').val('fresh@cnicg.cn') : $('#email').val('zhaopin@cnicg.cn');
+    });
+    $(document).on('change', '#email', function(){
+        var n = $(this).val();
+        if(!/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(n)){
+            $(this).parent().append('<span class="ipumsg">*邮箱格式错误！</span>');
+        }else{
+            $(this).next('.ipumsg').remove();
+        }
+    });
     // 新增岗位
     $(document).on('click', '#subjob', function(){
         var param={
@@ -108,12 +119,16 @@ $(function(){
             demand: $('#demand').val(),
             duty: $('#duty').val(),
             expire: $('#expire').val(),
-            groups: $('#group').val()
+            groups: $('#group').val(),
+            email: $('#email').val()
         };
-        JobsFunc('post', '', param, function(data){
-            window.location.href = '/joblist.html?manager='+cmsManager+'&token='+cmsToken;
-            alert('添加成功');
-        });
+        if($('#email').val()==''){alert('填写投递邮箱！');$('#email').focus();}
+        if(!$('.ipumsg').length>0){
+            JobsFunc('post', '', param, function(data){
+                window.location.href = '/joblist.html?manager='+cmsManager+'&token='+cmsToken;
+                alert('添加成功');
+            });
+        }
     });
     // 保存岗位
     $(document).on('click', '#savejob', function(){
@@ -127,12 +142,16 @@ $(function(){
             demand: $('#demand').val(),
             duty: $('#duty').val(),
             expire: $('#expire').val(),
-            groups: $('#group').val()
+            groups: $('#group').val(),
+            email: $('#email').val()
         };
-        JobsFunc('put', getParam('id'), param, function(data){
-            window.location.href = '/joblist.html?manager='+cmsManager+'&token='+cmsToken;
-            alert('编辑成功');
-        });
+        if($('#email').val()==''){alert('填写投递邮箱！');$('#email').focus();}
+        if(!$('.ipumsg').length>0) {
+            JobsFunc('put', getParam('id'), param, function (data) {
+                window.location.href = '/joblist.html?manager=' + cmsManager + '&token=' + cmsToken;
+                alert('编辑成功');
+            });
+        }
     });
 });
 

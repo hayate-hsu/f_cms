@@ -189,5 +189,7 @@ table {
 }
 .fontab .form-group select, .fontab .form-group input[type="text"], .fontab .form-group input[name="password"]{
   width: 48%;
-  display: block;
+  display: inline-block;
 }
+.fontab label{display: block;}
+.ipumsg{display: inline-block; margin-left: 10px; color: #df5640;}
