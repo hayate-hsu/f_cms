@@ -7,15 +7,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
-    <title>${title|h}</title>
+    <title>${message['title']|h}</title>
     <link rel="stylesheet" href="/css/mparticle.css" />
 </head>
 
 <body>
     <div class="rich">
-        <h2 class="rich_title">${title|h}</h2>
+        <h2 class="rich_title">${message['title']|h}</h2>
         <div class="rich_sub">
-			<p>${content}</p>
+			<p>${message['content']}</p>
 		</div>
     </div>
 </body>
