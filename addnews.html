@@ -10,16 +10,14 @@ ${jscode.jscode()}
         <div class="fontab">
             <div class="form-group"><label>标题：</label><input type="text" class="form-control title" /></div>
             <div class="form-group"><label>副标题：</label><input type="text" class="form-control subtitle" /></div>
-            <div class="form-group"><label>标签：</label>（多个标签需要用英文逗号“,”分隔，填写格式为：AA,BB,CC，最多为5个）<input type="text" class="form-control bqlabel" /></div>
+            <div class="form-group"><label>标签：</label>（多个标签需要用英文逗号“,”分隔，填写格式为：AA,BB,CC，最多为5个）<br><input type="text" class="form-control bqlabel" /></div>
             <div class="form-group"><label>新闻类型：</label><select class="form-control section"><option value="1">Unknown</option></select></div>
+            <div class="form-group"><label>到期时间：</label><input type="text" class="form-control datetime" /></div>
             <div class="form-group"><label>新闻类别：</label>
                 <select class="form-control gmtype">
                     % for gmtype in gmtypes:
                     <option value="${gmtype['id']}">${gmtype['name']}</option>
                     % endfor
-                    <!--<option value="1">标识资讯</option>-->
-                    <!--<option value="2">通告资讯</option>-->
-                    <!--<option value="3">技术资讯</option>-->
                 </select>
             </div>
             <div class="form-group img_upload">
@@ -40,8 +38,12 @@ ${jscode.jscode()}
     </div>
 </div>
 
-<script type="text/javascript">
+<script src="/js/lib/jqueryui.min.js"></script>
+<script>
     $(function(){
+        $('.datetime').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
         //新增新闻
         $('.sub').click(function(){
             var title = $('.title').val();
@@ -53,6 +55,7 @@ ${jscode.jscode()}
             var content = ue.getContent();
             var mask = 1<<1;
             var image = $('#imgVal').val();
+            var expired = $('.datetime').val();
 
             var $this = $(this);
 
@@ -71,6 +74,9 @@ ${jscode.jscode()}
                     mask: mask,
                     image: image
                 };
+                if(!!expired){
+                    objMessage.expired = expired;
+                }
 
                 $.ajax({
                     url: cmsUrl+'/message',
