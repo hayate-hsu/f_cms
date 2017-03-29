@@ -35,14 +35,13 @@
         });
         // 编辑类别
         $(document).on('click', '#conEditType', function(){
-            var name = $('#typeName').val();
+            var id = $('#typebox input[name=id]').val();
             var param = {
                 manager: cmsManager,
                 token: cmsToken,
-                name: name,
-                id: $('#typebox input[name=id]').val()
+                name: $('#typeName').val()
             };
-            typeAjax("put", param, function(data){
+            typeAjax("put", id, param, function(data){
                 window.location.reload();
             });
         });

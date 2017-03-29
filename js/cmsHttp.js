@@ -171,10 +171,10 @@ function ajaxGet(url, data, callback){
     });
 }
 
-function typeAjax(type, param, callback, errFunc){
+function typeAjax(type, id, param, callback, errFunc){
     $.ajax({
         method: type,
-        url: '/gmtype/',
+        url: '/gmtype/'+id,
         data: param,
         dataType: "json"
     }).done(function(data){
